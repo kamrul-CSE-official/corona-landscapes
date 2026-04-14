@@ -43,9 +43,10 @@ const Hero = () => {
             >
               Get an Estimate
             </Link>
+            
             <Link
-              to="#"
-              className="group text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase flex items-center gap-3 border-b border-white/30 pb-2 hover:border-[#b3ced1] transition-all drop-shadow-md"
+              to="tel:4254462308"
+              className="group text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase flex items-center gap-3 underline underline-offset-8 decoration-2 decoration-white/30 hover:decoration-[#b3ced1] transition-all drop-shadow-md"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

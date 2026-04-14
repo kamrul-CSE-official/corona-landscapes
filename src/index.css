@@ -23,6 +23,28 @@
   transition: all 1s cubic-bezier(0.22, 1, 0.36, 1);
 } */
 
+.blog-content .lead {
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: #4a5568;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+.blog-content .conclusion {
+  background: #f9fafb;
+  padding: 1.5rem;
+  border-left: 3px solid #b3ced1;
+  font-style: italic;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .blog-content .lead {
+    font-size: 1.1rem;
+  }
+}
+
 @keyframes hero-zoom {
   from {
     transform: scale(1);

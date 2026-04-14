@@ -8,7 +8,9 @@ const localAssets: { [key: string]: string } = {
     sulationSummary4: "/assets/images/Retaining Walls.webp",
     sulationSummary5: "/assets/images/Hardscaping.webp",
     sulationSummary6: "/assets/images/Maintenance Clean Ups.webp",
-    requestComponent: "/assets/images/bottom-cta-bg.webp"
+    requestComponent: "/assets/images/bottom-cta-bg.webp",
+    servicePageBanner: "/assets/images/services.webp",
+    servicePageRequrement: "/assets/images/lawncare-mount-juliet.webp"
 };
 
 

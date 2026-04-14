@@ -18,7 +18,7 @@ const ContactPageBanner = () => {
         <h1 className="text-5xl md:text-8xl font-serif mb-6 md:mb-8 italic">
           Begin The
           <br />
-          Journey
+          Journey.
         </h1>
         <p className="text-sm md:text-lg font-light tracking-[0.1em] md:tracking-[0.2em] uppercase opacity-80 max-w-2xl mx-auto">
           Reach out for a personal estimate and discover the potential of your outdoor space.

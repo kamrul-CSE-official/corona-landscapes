@@ -1,72 +1,312 @@
+import { useState } from "react";
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string;
+  message: string;
+}
+
+interface FormErrors {
+  firstName?: string;
+  lastName?: string;
+  phone?: string;
+  email?: string;
+  message?: string;
+}
+
 const ContactForm = () => {
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    phone: "",
+    email: "",
+    message: "",
+  });
+
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<{
+    type: "success" | "error" | null;
+    message: string;
+  }>({ type: null, message: "" });
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    if (!formData.firstName.trim()) {
+      newErrors.firstName = "First name is required";
+    }
+
+    if (!formData.lastName.trim()) {
+      newErrors.lastName = "Last name is required";
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required";
+      
+    } else if (!/^[\d\s\-()+]+$/.test(formData.phone)) {
+      newErrors.phone = "Invalid phone number format";
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Message is required";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitStatus({ type: null, message: "" });
+
+    // Replace with your actual API endpoint
+    try {
+      const response = await fetch("YOUR_API_ENDPOINT_HERE", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus({
+          type: "success",
+          message:
+            "Thank you! Our estimator will contact you within one business day.",
+        });
+
+        // Reset form
+        setFormData({
+          firstName: "",
+          lastName: "",
+          phone: "",
+          email: "",
+          message: "",
+        });
+
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus({ type: null, message: "" });
+        }, 5000);
+      } else {
+        throw new Error("Submission failed");
+      }
+    } catch {
+      setSubmitStatus({
+        type: "error",
+        message:
+          "Something went wrong. Please try again or call us directly at (425) 446-2308.",
+      });
+
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus({ type: null, message: "" });
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Clear error for this field when user starts typing
+    if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
+  };
+
   return (
-    <section className="pb-16 md:pb-40 px-4 md:px-8 lg:px-16 pt-10">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-32">
+    <div className="bg-white p-6 sm:p-8 md:p-12 shadow-[0_20px_60px_rgba(179,206,209,0.1)] border border-gray-50">
+      <div className="mb-8 md:mb-12">
+        <h2 className="text-2xl md:text-3xl font-serif text-[#1a2e30] mb-3 md:mb-4 italic">
+          Request an Estimate
+        </h2>
+        <p className="text-sm md:text-base text-gray-500 font-light leading-relaxed">
+          Provide us with some details about your project, and our estimator will
+          contact you within one business day.
+        </p>
+      </div>
 
-          {/* Left Side */}
-          <div className="reveal lg:col-span-4 space-y-12 md:space-y-24">
-            <div>
-              <h2 className="text-xs md:text-sm font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase text-[#1a2e30] mb-8 md:mb-12 border-b border-[#b3ced1] pb-2 md:pb-4 inline-block">
-                Connect With Us
-              </h2>
+      {/* Status Messages */}
+      {submitStatus.type === "success" && (
+        <div className="mb-6 p-4 bg-green-50 border-l-4 border-green-500 text-green-700 text-sm animate-slide-down">
+          {submitStatus.message}
+        </div>
+      )}
 
-              <div className="space-y-8 md:space-y-16">
-                {/* Call */}
-                <div className="group">
-                  <span className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 block mb-2 md:mb-4">
-                    Call
-                  </span>
-                  <a
-                    href="tel:4254462308"
-                    className="text-xl md:text-2xl font-serif text-[#1a2e30] hover:text-[#b3ced1] transition-all"
-                  >
-                    (425) 446-2308
-                  </a>
-                </div>
+      {submitStatus.type === "error" && (
+        <div className="mb-6 p-4 bg-red-50 border-l-4 border-red-500 text-red-700 text-sm animate-slide-down">
+          {submitStatus.message}
+        </div>
+      )}
 
-                {/* Email */}
-                <div className="group">
-                  <span className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 block mb-2 md:mb-4">
-                    Email
-                  </span>
-                  <a
-                    href="mailto:coronalandscapingwa@gmail.com"
-                    className="text-xl md:text-2xl font-serif text-[#1a2e30] hover:text-[#b3ced1] transition-all break-words"
-                  >
-                    coronalandscapingwa@gmail.com
-                  </a>
-                </div>
-
-                {/* Location */}
-                <div className="group">
-                  <span className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase text-gray-400 block mb-2 md:mb-4">
-                    Location
-                  </span>
-                  <p className="text-xl md:text-2xl font-serif text-[#1a2e30]">
-                    Monroe, WA & <br /> Surrounding Regions
-                  </p>
-                  <p className="text-[10px] md:text-xs font-bold tracking-[0.2em] uppercase text-[#b3ced1] mt-2 md:mt-4 italic">
-                    Serving Snohomish & King County
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* CTA Box */}
-            <div className="p-8 md:p-12 bg-[#b3ced1] text-[#1a2e30] shadow-xl">
-              <h3 className="text-2xl md:text-3xl font-serif mb-4 md:mb-8 leading-tight italic font-bold">
-                Transforming Monroe since 2015.
-              </h3>
-              <p className="text-xs md:text-sm font-medium opacity-70 mb-6 md:mb-10 leading-relaxed">
-                Call our team today for an immediate consultation or schedule a walk-through of your property.
+      <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8">
+        {/* Name Fields - 2 columns */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6">
+          {/* First Name */}
+          <div>
+            <label className="block text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-[#1a2e30] mb-2 md:mb-3">
+              First Name <span className="text-[#b3ced1]">*</span>
+            </label>
+            <input
+              type="text"
+              name="firstName"
+              value={formData.firstName}
+              onChange={handleChange}
+              placeholder="First Name"
+              className={`w-full px-4 py-3 md:py-4 bg-transparent border-2 border-black ${
+                errors.firstName ? "border-red-500" : "border-gray-200"
+              } focus:border-[#b3ced1] outline-none transition-colors text-sm md:text-base font-light text-[#1a2e30] placeholder:text-gray-300`}
+            />
+            {errors.firstName && (
+              <p className="text-red-500 text-[10px] md:text-xs mt-1">
+                {errors.firstName}
               </p>
+            )}
+          </div>
 
-              <a
-                href="tel:4254462308"
-                className="inline-flex items-center gap-4 md:gap-6 bg-[#1a2e30] text-white px-8 md:px-10 py-3 md:py-4 text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase hover:bg-white hover:text-[#1a2e30] transition-all shadow-lg"
-              >
-                Call Now
+          {/* Last Name */}
+          <div>
+            <label className="block text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-[#1a2e30] mb-2 md:mb-3">
+              Last Name <span className="text-[#b3ced1]">*</span>
+            </label>
+            <input
+              type="text"
+              name="lastName"
+              value={formData.lastName}
+              onChange={handleChange}
+              placeholder="Last Name"
+              className={`w-full px-4 py-3 md:py-4 bg-transparent border ${
+                errors.lastName ? "border-red-500" : "border-gray-200"
+              } focus:border-[#b3ced1] outline-none transition-colors text-sm md:text-base font-light text-[#1a2e30] placeholder:text-gray-300`}
+            />
+            {errors.lastName && (
+              <p className="text-red-500 text-[10px] md:text-xs mt-1">
+                {errors.lastName}
+              </p>
+            )}
+          </div>
+        </div>
+
+        {/* Phone */}
+        <div>
+          <label className="block text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-[#1a2e30] mb-2 md:mb-3">
+            Phone <span className="text-[#b3ced1]">*</span>
+          </label>
+          <input
+            type="tel"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            placeholder="Phone"
+            className={`w-full px-4 py-3 md:py-4 bg-transparent border ${
+              errors.phone ? "border-red-500" : "border-gray-200"
+            } focus:border-[#b3ced1] outline-none transition-colors text-sm md:text-base font-light text-[#1a2e30] placeholder:text-gray-300`}
+          />
+          {errors.phone && (
+            <p className="text-red-500 text-[10px] md:text-xs mt-1">
+              {errors.phone}
+            </p>
+          )}
+        </div>
+
+        {/* Email */}
+        <div>
+          <label className="block text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-[#1a2e30] mb-2 md:mb-3">
+            Email <span className="text-[#b3ced1]">*</span>
+          </label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="Email"
+            className={`w-full px-4 py-3 md:py-4 bg-transparent border ${
+              errors.email ? "border-red-500" : "border-gray-200"
+            } focus:border-[#b3ced1] outline-none transition-colors text-sm md:text-base font-light text-[#1a2e30] placeholder:text-gray-300`}
+          />
+          {errors.email && (
+            <p className="text-red-500 text-[10px] md:text-xs mt-1">
+              {errors.email}
+            </p>
+          )}
+        </div>
+
+        {/* Message */}
+        <div>
+          <label className="block text-[10px] md:text-[11px] font-bold tracking-[0.2em] uppercase text-[#1a2e30] mb-2 md:mb-3">
+            Message <span className="text-[#b3ced1]">*</span>
+          </label>
+          <textarea
+            name="message"
+            value={formData.message}
+            onChange={handleChange}
+            placeholder="Message"
+            rows={5}
+            className={`w-full px-4 py-3 md:py-4 bg-transparent border ${
+              errors.message ? "border-red-500" : "border-gray-200"
+            } focus:border-[#b3ced1] outline-none transition-colors text-sm md:text-base font-light text-[#1a2e30] placeholder:text-gray-300 resize-none`}
+          />
+          {errors.message && (
+            <p className="text-red-500 text-[10px] md:text-xs mt-1">
+              {errors.message}
+            </p>
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full md:w-auto inline-flex items-center justify-center gap-3 md:gap-4 bg-[#b3ced1] text-[#1a2e30] px-8 md:px-12 py-3 md:py-4 text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase hover:bg-[#1a2e30] hover:text-white transition-all group disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isSubmitting ? (
+              <>
+                <svg
+                  className="animate-spin h-4 w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  />
+                </svg>
+                Sending...
+              </>
+            ) : (
+              <>
+                Send Message
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="14"
@@ -77,51 +317,17 @@ const ContactForm = () => {
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
+                  className="group-hover:translate-x-1 transition-transform"
                 >
                   <path d="M5 12h14" />
                   <path d="m12 5 7 7-7 7" />
                 </svg>
-              </a>
-            </div>
-          </div>
-
-          {/* Right Side */}
-          <div className="reveal lg:col-span-8 bg-white p-6 sm:p-8 md:p-24 shadow-[0_20px_60px_rgba(179,206,209,0.1)] border border-gray-50 mt-8 lg:mt-0">
-            <div className="mb-10 md:mb-20">
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1a2e30] mb-4 md:mb-6 italic">
-                Request an Estimate
-              </h2>
-              <p className="text-sm md:text-base text-gray-500 font-light leading-relaxed">
-                Provide us with some details about your project, and our estimator will contact you within one business day.
-              </p>
-            </div>
-
-            {/* Form iframe */}
-            <div style={{ minHeight: "600px" }}>
-              <div
-                id="inline-rragTL9pJaMvC9H1JloF-div"
-                className="ep-iFrameContainer"
-                style={{ borderRadius: "3px", display: "block" }}
-              >
-                <div
-                  id="inline-rragTL9pJaMvC9H1JloF-wrapper"
-                  className="ep-wrapper"
-                  style={{ borderRadius: "3px" }}
-                >
-                  <iframe
-                    src="https://api.leadconnectorhq.com/widget/form/rragTL9pJaMvC9H1JloF"
-                    title="Website Form"
-                    scrolling="yes"
-                    className="w-full h-[629px] border-0 rounded"
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-
+              </>
+            )}
+          </button>
         </div>
-      </div>
-    </section>
+      </form>
+    </div>
   );
 };
 

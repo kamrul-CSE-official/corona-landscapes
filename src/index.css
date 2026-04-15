@@ -132,3 +132,13 @@ html {
   transition: width 0.1s ease-out;
   box-shadow: 0 0 10px rgba(179, 206, 209, 0.5);
 }
+
+::selection {
+  background-color: #b6ced1;
+  color: #1a2e30;
+}
+
+::-moz-selection {
+  background-color: #b6ced1;
+  color: #1a2e30;
+}

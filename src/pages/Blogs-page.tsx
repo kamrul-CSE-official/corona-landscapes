@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import blogService from "../services/blogService";
 import localAssets from "../consts/assets";
-import BlogPageBanner from "../components/share/blogPageBanner"; 
-import BlogPageCustomRequirement from "../components/share/blogPageCustomRequirement "; 
+import BlogPageBanner from "../components/share/blogPageBanner";
+import BlogPageCustomRequirement from "../components/share/blogPageCustomRequirement ";
 
 interface BlogPost {
   id: number;
@@ -20,9 +20,13 @@ interface BlogPost {
 }
 
 const BlogsPage = () => {
-  const [blogs, setBlogs] = useState<BlogPost[]>([]); 
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [postsPerPage] = useState<number>(6); // 6 posts per page (2 rows of 3 columns)
 
   useEffect(() => {
     fetchBlogs();
@@ -46,10 +50,74 @@ const BlogsPage = () => {
     } catch (err) {
       console.error("Error fetching blogs:", err);
       setError("Failed to load blogs. Please try again later.");
-      setBlogs([]); 
+      setBlogs([]);
     } finally {
       setLoading(false);
     }
+  };
+
+  // Pagination calculations
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = blogs.slice(indexOfFirstPost, indexOfLastPost);
+  const totalPages = Math.ceil(blogs.length / postsPerPage);
+
+  // Change page
+  const paginate = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Go to next page
+  const nextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Go to previous page
+  const prevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
+  // Generate page numbers to display
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxPagesToShow = 5;
+    
+    if (totalPages <= maxPagesToShow) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      if (currentPage <= 3) {
+        for (let i = 1; i <= 4; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push('...');
+        pageNumbers.push(totalPages);
+      } else if (currentPage >= totalPages - 2) {
+        pageNumbers.push(1);
+        pageNumbers.push('...');
+        for (let i = totalPages - 3; i <= totalPages; i++) {
+          pageNumbers.push(i);
+        }
+      } else {
+        pageNumbers.push(1);
+        pageNumbers.push('...');
+        for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+          pageNumbers.push(i);
+        }
+        pageNumbers.push('...');
+        pageNumbers.push(totalPages);
+      }
+    }
+    
+    return pageNumbers;
   };
 
   console.log("Render state - loading:", loading, "blogs length:", blogs?.length, "error:", error);
@@ -114,7 +182,7 @@ const BlogsPage = () => {
       <section className="py-16 md:py-40 px-4 md:px-8 lg:px-16">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-16">
-            {blogs.map((post, index) => (
+            {currentPosts.map((post, index) => (
               <div key={post.id} className="reveal reveal-visible">
                 <div className="group flex flex-col h-full">
                   <Link to={`/blogs/${post.id}`} className="block">
@@ -135,7 +203,7 @@ const BlogsPage = () => {
                   </Link>
                   <div className="flex items-center gap-4 md:gap-6">
                     <span className="text-[9px] md:text-[10px] font-sans opacity-30 font-bold">
-                      {(index + 1).toString().padStart(2, '0')}
+                      {(indexOfFirstPost + index + 1).toString().padStart(2, '0')}
                     </span>
                     <Link to={`/blogs/${post.id}`} className="flex-1">
                       <h3 className="text-xl md:text-2xl font-serif text-[#1a2e30] italic group-hover:text-[#b3ced1] transition-all cursor-pointer line-clamp-2">
@@ -177,6 +245,89 @@ const BlogsPage = () => {
                 </div>
               </div>
             ))}
+          </div>
+
+          {/* Pagination Component */}
+          {totalPages > 1 && (
+            <div className="flex justify-center items-center gap-2 md:gap-3 mt-12 md:mt-16">
+              {/* Previous Button */}
+              <button
+                onClick={prevPage}
+                disabled={currentPage === 1}
+                className={`group h-8 w-8 md:h-10 md:w-10 flex items-center justify-center border rounded-full transition-all shrink-0 ${
+                  currentPage === 1
+                    ? "border-gray-200 text-gray-300 cursor-not-allowed"
+                    : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-[#1a2e30]"
+                }`}
+                aria-label="Previous page"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="rotate-180"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </button>
+
+              {/* Page Numbers */}
+              {getPageNumbers().map((page, index) => (
+                <button
+                  key={index}
+                  onClick={() => typeof page === 'number' && paginate(page)}
+                  className={`h-8 w-8 md:h-10 md:w-10 flex items-center justify-center border rounded-full transition-all shrink-0 text-sm md:text-base ${
+                    currentPage === page
+                      ? "bg-[#1a2e30] text-white border-[#1a2e30]"
+                      : page === '...'
+                      ? "border-transparent cursor-default"
+                      : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-[#1a2e30]"
+                  }`}
+                  disabled={page === '...'}
+                >
+                  {page}
+                </button>
+              ))}
+
+              {/* Next Button */}
+              <button
+                onClick={nextPage}
+                disabled={currentPage === totalPages}
+                className={`group h-8 w-8 md:h-10 md:w-10 flex items-center justify-center border rounded-full transition-all shrink-0 ${
+                  currentPage === totalPages
+                    ? "border-gray-200 text-gray-300 cursor-not-allowed"
+                    : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-[#1a2e30]"
+                }`}
+                aria-label="Next page"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </button>
+            </div>
+          )}
+
+          {/* Optional: Showing current page info */}
+          <div className="text-center mt-6 text-sm text-gray-500">
+            Showing {indexOfFirstPost + 1} - {Math.min(indexOfLastPost, blogs.length)} of {blogs.length} articles
           </div>
         </div>
       </section>

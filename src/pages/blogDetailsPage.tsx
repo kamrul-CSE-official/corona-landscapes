@@ -151,7 +151,7 @@ const BlogDetailsPage = () => {
         <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-6 opacity-70 text-[#b3ced1]">
           {post.category}
         </span>
-        <h1 className="text-5xl md:text-8xl font-serif mb-6 md:mb-8 italic">
+        <h1 className="text-4xl font-serif mb-6 md:mb-8 italic">
           {post.title}
         </h1>
         <div className="flex items-center justify-center gap-3 text-sm text-white/80 flex-wrap">

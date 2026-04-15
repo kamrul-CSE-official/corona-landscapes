@@ -44,7 +44,7 @@ const SulationSummary = () => {
             </h1>
           </div>
           <Link
-            to="#"
+            to="/services"
             className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] md:tracking-[0.4em] uppercase text-[#1a2e30] flex items-center justify-center md:justify-start gap-4 group border-b border-[#b3ced1]/40 pb-2 hover:border-[#b3ced1] transition-all"
           >
             View All Services{" "}
@@ -70,7 +70,7 @@ const SulationSummary = () => {
           {sulationItems.map((item, i) => (
             <Link
               key={i}
-              to="#"
+              to="/services"
               className="group relative flex flex-col bg-white overflow-hidden shadow-sm"
             >
               <div className="relative aspect-[4/5] overflow-hidden">

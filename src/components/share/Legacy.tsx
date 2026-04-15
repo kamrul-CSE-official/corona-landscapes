@@ -3,7 +3,7 @@ import localAssets from "../../consts/assets";
 
 const Legacy = () => {
   return (
-    <section className="py-16 md:py-40 px-4 md:px-8 lg:px-16 overflow-hidden bg-[#F5F2ED]">
+    <section data-aos="fade-up" className="py-16 md:py-40 px-4 md:px-8 lg:px-16 overflow-hidden bg-[#F5F2ED]">
       <div className="reveal reveal-visible max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 md:gap-20 items-center">
           <div className="lg:col-span-7">

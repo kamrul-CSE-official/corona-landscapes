@@ -30,7 +30,7 @@ const FaqSection = () => {
   };
 
   return (
-    <section className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#F5F2ED]">
+    <section data-aos="fade-up" className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#F5F2ED]">
       <div className="reveal reveal-visible max-w-4xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-serif text-[#1a2e30] mb-8 md:mb-20 text-center">
           Frequently Asked

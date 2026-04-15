@@ -23,7 +23,7 @@ const Hero = () => {
         </section>
 
         {/* content */}
-        <section className="relative z-10 text-center text-white px-4 md:px-8 pt-24 md:pt-0 max-w-5xl fade-in">
+        <section data-aos="fade-up" className="relative z-10 text-center text-white px-4 md:px-8 pt-24 md:pt-0 max-w-5xl fade-in">
           <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-8 opacity-90 drop-shadow-md">
             Established 2015 — Monroe, WA
           </span>

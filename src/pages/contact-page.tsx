@@ -14,7 +14,7 @@ const ContactPage = () => {
           />
           <div className="absolute inset-0 bg-[#1a2e30]/70"></div>
         </div>
-        <div className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
+        <div data-aos="fade-up" className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
           <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-6 opacity-70 text-[#b3ced1]">
             Begin The Journey
           </span>
@@ -29,7 +29,7 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Content Section */}
-      <section className="pb-16 md:pb-40 px-4 md:px-8 lg:px-16 pt-10">
+      <section data-aos="fade-up" className="pb-16 md:pb-40 px-4 md:px-8 lg:px-16 pt-10">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-32">
             {/* Left Side - Contact Information */}

@@ -63,7 +63,7 @@ const ClientChronicles = () => {
   const slide = testimonials[current];
 
   return (
-    <section className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#1a2e30] text-white overflow-hidden relative">
+    <section data-aos="fade-up" className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#1a2e30] text-white overflow-hidden relative">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12 md:mb-24">
           <span className="font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase text-[9px] md:text-[10px] mb-4 md:mb-6 block opacity-60 text-[#b3ced1]">

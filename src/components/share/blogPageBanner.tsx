@@ -11,7 +11,7 @@ const BlogPageBanner = () => {
         />
         <div className="absolute inset-0 bg-[#1a2e30]/70"></div>
       </div>
-      <div className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
+      <div data-aos="fade-up" className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
         <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-6 opacity-70 text-[#b3ced1]">
           Insights & Inspiration
         </span>

@@ -106,7 +106,7 @@ const coreItems: {
 ];
 const CoreSpecialties = () => {
   return (
-    <div className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#1a2e30]">
+    <div data-aos="fade-up" className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#1a2e30]">
       <div className="reveal reveal-visible max-w-7xl mx-auto">
         <div className="text-center mb-12 md:mb-24">
           <span className="text-[#b3ced1] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase text-[9px] md:text-[10px] mb-4 md:mb-6 block">

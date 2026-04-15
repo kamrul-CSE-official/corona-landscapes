@@ -30,7 +30,7 @@ const sulationItems: { title: string; image: string }[] = [
 
 const SulationSummary = () => {
   return (
-    <section className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-white">
+    <section data-aos="fade-up" className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-white">
       <div className="reveal reveal-visible max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 md:mb-24 gap-6 md:gap-8">
           <div className="max-w-2xl text-center md:text-left">

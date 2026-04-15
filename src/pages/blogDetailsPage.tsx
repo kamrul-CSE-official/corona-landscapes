@@ -147,7 +147,7 @@ const BlogDetailsPage = () => {
         />
         <div className="absolute inset-0 bg-[#1a2e30]/70"></div>
       </div>
-      <div className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
+      <div data-aos="fade-up" className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
         <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-6 opacity-70 text-[#b3ced1]">
           {post.category}
         </span>
@@ -165,7 +165,7 @@ const BlogDetailsPage = () => {
     </section>
 
       {/* Content Section */}
-      <section className="py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
+      <section data-aos="fade-up" className="py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
         <div className="max-w-3xl mx-auto">
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-gray-100">

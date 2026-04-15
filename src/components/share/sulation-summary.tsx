@@ -7,23 +7,23 @@ const sulationItems: { title: string; image: string }[] = [
     image: localAssets.sulationSummary1,
   },
   {
-    title: "Residential Landscape",
+    title: "Commercial Landscape",
     image: localAssets.sulationSummary2,
   },
   {
-    title: "Residential Landscape",
+    title: "Artificial Turf",
     image: localAssets.sulationSummary3,
   },
   {
-    title: "Residential Landscape",
+    title: "Retaining Walls",
     image: localAssets.sulationSummary4,
   },
   {
-    title: "Residential Landscape",
+    title: "Hardscaping",
     image: localAssets.sulationSummary5,
   },
   {
-    title: "Residential Landscape",
+    title: "Maintenance Clean Ups",
     image: localAssets.sulationSummary6,
   },
 ];

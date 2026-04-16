@@ -64,6 +64,15 @@ html {
   scroll-padding-top: 100px; /* Adds padding when scrolling to anchored elements */
 }
 
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
 /* For browsers that support scroll behavior */
 @media (prefers-reduced-motion: no-preference) {
   html {
@@ -89,6 +98,19 @@ html {
   .md\:mb-12 {
     margin-bottom: 3rem;
   }
+}
+
+@media (min-width: 768px) {
+    .md\:text-6xl {
+        font-size: 3.75rem;
+        line-height: 1;
+    }
+}
+
+@media (min-width: 768px) {
+    .md\:mb-10 {
+        margin-bottom: 2.5rem;
+    }
 }
 /* Custom scrollbar - Webkit browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {

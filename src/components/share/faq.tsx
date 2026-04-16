@@ -18,8 +18,9 @@ const faqs: FaqItem[] = [
   },
   {
     question: "How do you determine pricing?",
-    answer: "Our pricing is honest and transparent. We base estimates on service type, premium material costs, and total scope. We provide firm quotes before a single shovel hits the ground, ensuring there are no hidden surprises."
-  }
+    answer:
+      "Our pricing is honest and transparent. We base estimates on service type, premium material costs, and total scope. We provide firm quotes before a single shovel hits the ground, ensuring there are no hidden surprises.",
+  },
 ];
 
 const FaqSection = () => {
@@ -30,7 +31,10 @@ const FaqSection = () => {
   };
 
   return (
-    <section data-aos="fade-up" className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#F5F2ED]">
+    <section
+      data-aos="fade-up"
+      className="py-16 md:py-40 px-4 md:px-8 lg:px-16 bg-[#F5F2ED]"
+    >
       <div className="reveal reveal-visible max-w-4xl mx-auto">
         <h2 className="text-3xl md:text-5xl font-serif text-[#1a2e30] mb-8 md:mb-20 text-center">
           Frequently Asked
@@ -57,7 +61,9 @@ const FaqSection = () => {
                   </h3>
                   <div
                     className="transition-transform duration-500 shrink-0 text-[#b3ced1]"
-                    style={{ transform: isOpen ? "rotate(0deg)" : "rotate(90deg)" }}
+                    style={{
+                      transform: isOpen ? "rotate(0deg)" : "rotate(90deg)",
+                    }}
                   >
                     {isOpen ? (
                       <svg
@@ -98,9 +104,20 @@ const FaqSection = () => {
 
                 <div
                   className="transition-all duration-500 ease-in-out overflow-hidden"
-                  style={{ maxHeight: isOpen ? "500px" : "0px", opacity: isOpen ? 1 : 0 }}
+                  style={{
+                    maxHeight: isOpen ? "500px" : "0px",
+                    opacity: isOpen ? 1 : 0,
+                  }}
                 >
-                  <div className="px-4 md:px-24 text-gray-500 font-light leading-relaxed border-l-4 border-[#b3ced1]/30 ml-4 md:ml-8 text-sm md:text-base pb-6 md:pb-12">
+                  <div className="relative px-4 md:px-24 text-gray-500 font-light leading-relaxed border-l-4 border-[#b3ced1]/30 ml-4 md:ml-8 text-sm md:text-base pb-6 md:pb-12">
+                    <span
+                      className="absolute left-0 top-1 -translate-y-1/2"
+                      style={{
+                        width: "4px",
+                        height: "60%",
+                        backgroundColor: "rgba(179, 206, 209, 0.3)",
+                      }}
+                    />
                     {faq.answer}
                   </div>
                 </div>

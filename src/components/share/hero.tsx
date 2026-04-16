@@ -38,7 +38,7 @@ const Hero = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
             <Link
-              to="#"
+              to="/contact"
               className="group bg-[#b3ced1] text-[#1a2e30] px-8 py-4 md:px-12 md:py-5 text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase hover:bg-[#1a2e30] hover:text-white transition-all duration-500 min-w-[200px] md:min-w-[240px] shadow-2xl"
             >
               Get an Estimate

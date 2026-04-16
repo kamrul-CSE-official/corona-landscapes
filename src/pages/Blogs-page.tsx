@@ -285,7 +285,7 @@ const BlogsPage = () => {
                   onClick={() => typeof page === 'number' && paginate(page)}
                   className={`h-8 w-8 md:h-10 md:w-10 flex items-center justify-center border rounded-full transition-all shrink-0 text-sm md:text-base ${
                     currentPage === page
-                      ? "bg-[#1a2e30] text-white border-[#1a2e30]"
+                      ? "bg-[#b3ced1] text-white border-[#1a2e30]"
                       : page === '...'
                       ? "border-transparent cursor-default"
                       : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-[#1a2e30]"

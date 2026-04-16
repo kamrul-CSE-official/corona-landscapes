@@ -8,7 +8,7 @@ import SulationSummary from "../components/share/sulation-summary";
 
 const HomePage = () => {
   return (
-    <main className="flex-grow">
+    <main className="flex-grow bg-[#F5F2ED]">
       <Hero />
       <Legacy />
       <CoreSpecialties />

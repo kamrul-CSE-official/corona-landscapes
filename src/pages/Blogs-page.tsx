@@ -288,7 +288,7 @@ const BlogsPage = () => {
                       ? "bg-[#b3ced1] text-white border-[#1a2e30]"
                       : page === '...'
                       ? "border-transparent cursor-default"
-                      : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-[#1a2e30]"
+                      : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-white"
                   }`}
                   disabled={page === '...'}
                 >
@@ -303,7 +303,7 @@ const BlogsPage = () => {
                 className={`group h-8 w-8 md:h-10 md:w-10 flex items-center justify-center border rounded-full transition-all shrink-0 ${
                   currentPage === totalPages
                     ? "border-gray-200 text-gray-300 cursor-not-allowed"
-                    : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-[#1a2e30]"
+                    : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-white"
                 }`}
                 aria-label="Next page"
               >

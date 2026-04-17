@@ -23,7 +23,10 @@ const Hero = () => {
         </section>
 
         {/* content */}
-        <section data-aos="fade-up" className="relative z-10 text-center text-white px-4 md:px-8 pt-24 md:pt-0 max-w-5xl fade-in">
+        <section
+          data-aos="fade-up"
+          className="relative z-10 text-center text-white px-4 md:px-8 pt-24 md:pt-0 max-w-5xl fade-in"
+        >
           <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-8 opacity-90 drop-shadow-md">
             Established 2015 — Monroe, WA
           </span>
@@ -33,8 +36,8 @@ const Hero = () => {
             <span className="not-italic">For Your Home.</span>
           </h1>
           <p className="text-sm md:text-xl font-light tracking-widest uppercase mb-8 md:mb-12 opacity-90 max-w-2xl mx-auto leading-relaxed drop-shadow-sm">
-            Transforming outdoor spaces in Monroe with family-owned expertise
-            and timeless design.
+            Transforming outdoor spaces in Monroe with <br /> family-owned
+            expertise and timeless design.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center">
             <Link
@@ -43,7 +46,7 @@ const Hero = () => {
             >
               Get an Estimate
             </Link>
-            
+
             <Link
               to="tel:4254462308"
               className="group text-white text-[10px] md:text-[11px] font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase flex items-center gap-3 underline underline-offset-8 decoration-2 decoration-white/30 hover:decoration-[#b3ced1] transition-all drop-shadow-md"

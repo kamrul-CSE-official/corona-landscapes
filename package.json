@@ -3,6 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {
+    "name": "MD.Kamrul Hasan",
+    "email": "kamrul24.official@gmail.com",
+    "mobile": "+8801823855998"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",

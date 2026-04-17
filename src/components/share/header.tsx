@@ -6,8 +6,8 @@ import { cn } from "../../lib/utils";
 const navItems: { name: string; href: string }[] = [
   { name: "Home", href: "/" },
   { name: "Services", href: "/services" },
-  { name: "Contact", href: "/contact" },
   { name: "Blogs", href: "/blogs" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const Header = () => {

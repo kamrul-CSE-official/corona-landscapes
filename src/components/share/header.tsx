@@ -173,7 +173,7 @@ const Header = () => {
             className={cn(
               "px-10 py-3 text-[10px] tracking-[0.3em] uppercase font-bold transition-all duration-500",
               !shrink
-                ? "bg-white/10 text-white backdrop-blur-md hover:bg-white hover:text-[#1a2e30]"
+                ? "bg-white/10 text-white backdrop-blur-md hover:!text-[#1a2e30] hover:bg-white"
                 : "bg-[#b3ced1] text-[#1a2e30] hover:bg-[#1a2e30] hover:text-white",
             )}
           >

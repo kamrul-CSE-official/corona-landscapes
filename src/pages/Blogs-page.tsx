@@ -23,7 +23,7 @@ const BlogsPage = () => {
   const [blogs, setBlogs] = useState<BlogPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [postsPerPage] = useState<number>(6); // 6 posts per page (2 rows of 3 columns)
@@ -37,7 +37,7 @@ const BlogsPage = () => {
       setLoading(true);
       const data = await blogService.getAllBlogs();
       console.log("Fetched blogs:", data);
-      
+
       if (Array.isArray(data)) {
         setBlogs(data);
       } else {
@@ -45,7 +45,7 @@ const BlogsPage = () => {
         setBlogs([]);
         setError("Invalid data format received");
       }
-      
+
       setError(null);
     } catch (err) {
       console.error("Error fetching blogs:", err);
@@ -65,14 +65,14 @@ const BlogsPage = () => {
   // Change page
   const paginate = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Go to next page
   const nextPage = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -80,7 +80,7 @@ const BlogsPage = () => {
   const prevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -88,7 +88,7 @@ const BlogsPage = () => {
   const getPageNumbers = () => {
     const pageNumbers = [];
     const maxPagesToShow = 5;
-    
+
     if (totalPages <= maxPagesToShow) {
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
@@ -98,29 +98,36 @@ const BlogsPage = () => {
         for (let i = 1; i <= 4; i++) {
           pageNumbers.push(i);
         }
-        pageNumbers.push('...');
+        pageNumbers.push("...");
         pageNumbers.push(totalPages);
       } else if (currentPage >= totalPages - 2) {
         pageNumbers.push(1);
-        pageNumbers.push('...');
+        pageNumbers.push("...");
         for (let i = totalPages - 3; i <= totalPages; i++) {
           pageNumbers.push(i);
         }
       } else {
         pageNumbers.push(1);
-        pageNumbers.push('...');
+        pageNumbers.push("...");
         for (let i = currentPage - 1; i <= currentPage + 1; i++) {
           pageNumbers.push(i);
         }
-        pageNumbers.push('...');
+        pageNumbers.push("...");
         pageNumbers.push(totalPages);
       }
     }
-    
+
     return pageNumbers;
   };
 
-  console.log("Render state - loading:", loading, "blogs length:", blogs?.length, "error:", error);
+  console.log(
+    "Render state - loading:",
+    loading,
+    "blogs length:",
+    blogs?.length,
+    "error:",
+    error,
+  );
 
   if (loading) {
     return (
@@ -185,14 +192,15 @@ const BlogsPage = () => {
             {currentPosts.map((post, index) => (
               <div key={post.id} className="reveal reveal-visible">
                 <div className="group flex flex-col h-full">
-                  <Link to={`/blogs/${post.id}`} className="block">
+                  <Link to={`/blogs/${post.slug}`} className="block">
                     <div className="relative overflow-hidden mb-6 md:mb-10 aspect-[4/5] shadow-sm cursor-pointer">
                       <img
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000"
                         src={post.image || localAssets.sulationSummary1}
                         onError={(e) => {
-                          (e.target as HTMLImageElement).src = localAssets.sulationSummary1;
+                          (e.target as HTMLImageElement).src =
+                            localAssets.sulationSummary1;
                         }}
                       />
                       <div className="absolute inset-0 bg-[#b3ced1]/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
@@ -203,9 +211,11 @@ const BlogsPage = () => {
                   </Link>
                   <div className="flex items-center gap-4 md:gap-6">
                     <span className="text-[9px] md:text-[10px] font-sans opacity-30 font-bold">
-                      {(indexOfFirstPost + index + 1).toString().padStart(2, '0')}
+                      {(indexOfFirstPost + index + 1)
+                        .toString()
+                        .padStart(2, "0")}
                     </span>
-                    <Link to={`/blogs/${post.id}`} className="flex-1">
+                    <Link to={`/blogs/${post.slug}`} className="flex-1">
                       <h3 className="text-xl md:text-2xl font-serif text-[#1a2e30] italic group-hover:text-[#b3ced1] transition-all cursor-pointer line-clamp-2">
                         {post.title}
                       </h3>
@@ -223,7 +233,7 @@ const BlogsPage = () => {
                   </p>
                   <div className="h-px bg-gray-200 mt-6 md:mt-8 w-full group-hover:bg-[#b3ced1] transition-colors"></div>
                   <Link
-                    to={`/blogs/${post.id}`}
+                    to={`/blogs/${post.slug}`}
                     className="inline-flex items-center gap-2 mt-4 text-[10px] md:text-[11px] font-bold tracking-[0.15em] uppercase text-[#1a2e30]/60 hover:text-[#b3ced1] transition-colors group/link"
                   >
                     Read More
@@ -282,15 +292,15 @@ const BlogsPage = () => {
               {getPageNumbers().map((page, index) => (
                 <button
                   key={index}
-                  onClick={() => typeof page === 'number' && paginate(page)}
+                  onClick={() => typeof page === "number" && paginate(page)}
                   className={`h-8 w-8 md:h-10 md:w-10 flex items-center justify-center border rounded-full transition-all shrink-0 text-sm md:text-base ${
                     currentPage === page
                       ? "bg-[#b3ced1] text-white border-[#1a2e30]"
-                      : page === '...'
-                      ? "border-transparent cursor-default"
-                      : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-white"
+                      : page === "..."
+                        ? "border-transparent cursor-default"
+                        : "border-gray-100 hover:border-[#b3ced1] hover:bg-[#b3ced1] hover:text-white"
                   }`}
-                  disabled={page === '...'}
+                  disabled={page === "..."}
                 >
                   {page}
                 </button>
@@ -327,7 +337,8 @@ const BlogsPage = () => {
 
           {/* Optional: Showing current page info */}
           <div className="text-center mt-6 text-sm text-gray-500">
-            Showing {indexOfFirstPost + 1} - {Math.min(indexOfLastPost, blogs.length)} of {blogs.length} articles
+            Showing {indexOfFirstPost + 1} -{" "}
+            {Math.min(indexOfLastPost, blogs.length)} of {blogs.length} articles
           </div>
         </div>
       </section>

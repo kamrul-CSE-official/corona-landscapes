@@ -19,7 +19,6 @@ interface BlogPost {
 
 const BlogDetailsPage = () => {
   const { id } = useParams<{ id: string }>();
-  console.log("IDDDDDDDDDDDDDD: ", id);
   const navigate = useNavigate();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [relatedPosts, setRelatedPosts] = useState<BlogPost[]>([]);
@@ -36,22 +35,22 @@ const BlogDetailsPage = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Fetch the blog post by ID
-      const blogPost = await blogService.getBlogById(parseInt(id!));
-      
+      const blogPost = await blogService.getBlogById(id!);
+
       if (!blogPost) {
         setError("Blog post not found");
         setLoading(false);
         return;
       }
-      
+
       setPost(blogPost);
-      
+
       // Fetch related blogs (excluding current)
       const related = await blogService.getRelatedBlogs(id!, 3);
       setRelatedPosts(related);
-      
+
       // Scroll to top when post loads
       window.scrollTo(0, 0);
     } catch (err) {
@@ -75,13 +74,16 @@ const BlogDetailsPage = () => {
       <main>
         {/* Skeleton Loader for Hero */}
         <div className="h-[50vh] bg-gray-200 animate-pulse"></div>
-        
+
         {/* Skeleton Loader for Content */}
         <section className="py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
           <div className="max-w-3xl mx-auto">
             <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-gray-100">
               {[1, 2, 3].map((i) => (
-                <div key={i} className="h-6 w-16 bg-gray-200 rounded animate-pulse"></div>
+                <div
+                  key={i}
+                  className="h-6 w-16 bg-gray-200 rounded animate-pulse"
+                ></div>
               ))}
             </div>
             <div className="space-y-4">
@@ -136,51 +138,58 @@ const BlogDetailsPage = () => {
     <main>
       {/* Hero Section */}
       <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
-      <div className="absolute inset-0">
-        <img
-          className="w-full h-full object-cover"
-          src={post.image || localAssets.sulationSummary1}
-          alt={post.title}
-          onError={(e) => {
-            (e.target as HTMLImageElement).src = localAssets.sulationSummary1;
-          }}
-        />
-        <div className="absolute inset-0 bg-[#1a2e30]/70"></div>
-      </div>
-      <div data-aos="fade-up" className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in">
-        <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-6 opacity-70 text-[#b3ced1]">
-          {post.category}
-        </span>
-        <h1 className="text-4xl font-serif mb-6 md:mb-8 italic">
-          {post.title}
-        </h1>
-        <div className="flex items-center justify-center gap-3 text-sm text-white/80 flex-wrap">
-          <span>{post.date}</span>
-          <span className="w-1 h-1 rounded-full bg-white/50"></span>
-          <span>By {post.author}</span>
-          <span className="w-1 h-1 rounded-full bg-white/50"></span>
-          <span>{post.readTime}</span>
+        <div className="absolute inset-0">
+          <img
+            className="w-full h-full object-cover"
+            src={post.image || localAssets.sulationSummary1}
+            alt={post.title}
+            onError={(e) => {
+              (e.target as HTMLImageElement).src = localAssets.sulationSummary1;
+            }}
+          />
+          <div className="absolute inset-0 bg-[#1a2e30]/70"></div>
         </div>
-      </div>
-    </section>
+        <div
+          data-aos="fade-up"
+          className="relative z-10 text-center text-white px-4 md:px-8 max-w-4xl pt-20 md:pt-24 fade-in"
+        >
+          <span className="inline-block text-[9px] md:text-[11px] font-bold tracking-[0.3em] md:tracking-[0.5em] uppercase mb-4 md:mb-6 opacity-70 text-[#b3ced1]">
+            {post.category}
+          </span>
+          <h1 className="text-4xl font-serif mb-6 md:mb-8 italic">
+            {post.title}
+          </h1>
+          <div className="flex items-center justify-center gap-3 text-sm text-white/80 flex-wrap">
+            <span>{post.date}</span>
+            <span className="w-1 h-1 rounded-full bg-white/50"></span>
+            <span>By {post.author}</span>
+            <span className="w-1 h-1 rounded-full bg-white/50"></span>
+            <span>{post.readTime}</span>
+          </div>
+        </div>
+      </section>
 
       {/* Content Section */}
-      <section data-aos="fade-up" className="py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white">
+      <section
+        data-aos="fade-up"
+        className="py-16 md:py-24 px-4 md:px-8 lg:px-16 bg-white"
+      >
         <div className="max-w-3xl mx-auto">
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mb-8 pb-8 border-b border-gray-100">
-            {post.tags && post.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-[9px] md:text-[10px] font-sans tracking-wide text-[#1a2e30]/60 bg-gray-100 px-3 py-1.5 rounded-sm"
-              >
-                #{tag}
-              </span>
-            ))}
+            {post.tags &&
+              post.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-[9px] md:text-[10px] font-sans tracking-wide text-[#1a2e30]/60 bg-gray-100 px-3 py-1.5 rounded-sm"
+                >
+                  #{tag}
+                </span>
+              ))}
           </div>
 
           {/* Blog Content */}
-          <article 
+          <article
             className="blog-content prose prose-lg max-w-none
               prose-headings:font-serif prose-headings:text-[#1a2e30] prose-headings:italic
               prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl
@@ -200,11 +209,14 @@ const BlogDetailsPage = () => {
                 {post.author.charAt(0)}
               </div> */}
               <div>
-                <h4 className="font-serif text-xl text-[#1a2e30] italic mb-1">About {post.author}</h4>
+                <h4 className="font-serif text-xl text-[#1a2e30] italic mb-1">
+                  About {post.author}
+                </h4>
                 <p className="text-sm text-gray-600">
-                  {post.author} is a landscape designer with over a decade of experience creating sustainable, 
-                  beautiful outdoor spaces. Passionate about native plants and eco-friendly design, 
-                  they bring expert insights to every project.
+                  {post.author} is a landscape designer with over a decade of
+                  experience creating sustainable, beautiful outdoor spaces.
+                  Passionate about native plants and eco-friendly design, they
+                  bring expert insights to every project.
                 </p>
               </div>
             </div>
@@ -272,7 +284,7 @@ const BlogDetailsPage = () => {
               {relatedPosts.map((relatedPost, index) => (
                 <Link
                   key={relatedPost.id}
-                  to={`/blogs/${relatedPost.id}`}
+                  to={`/blogs/${relatedPost.slug}`}
                   className="group block"
                 >
                   <div className="relative overflow-hidden mb-4 aspect-[4/5] shadow-sm">
@@ -281,14 +293,15 @@ const BlogDetailsPage = () => {
                       className="w-full h-full object-cover group-hover:scale-110 transition-all duration-1000"
                       src={relatedPost.image || localAssets.sulationSummary1}
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = localAssets.sulationSummary1;
+                        (e.target as HTMLImageElement).src =
+                          localAssets.sulationSummary1;
                       }}
                     />
                     <div className="absolute inset-0 bg-[#b3ced1]/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
                   </div>
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-[9px] font-sans opacity-30 font-bold">
-                      {(index + 1).toString().padStart(2, '0')}
+                      {(index + 1).toString().padStart(2, "0")}
                     </span>
                     <span className="text-[9px] md:text-[10px] text-[#b3ced1] font-bold tracking-wide uppercase">
                       {relatedPost.category}
@@ -323,9 +336,10 @@ const BlogDetailsPage = () => {
             Subscribe to Our Newsletter
           </h2>
           <p className="text-white/70 text-sm md:text-base mb-8 max-w-md mx-auto">
-            Get the latest landscaping insights delivered straight to your inbox.
+            Get the latest landscaping insights delivered straight to your
+            inbox.
           </p>
-          <form 
+          <form
             onSubmit={(e) => {
               e.preventDefault();
               // Handle newsletter subscription
